@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 26 16:47:45 2020
+
+@author: djemi
+"""
+
+import nltk
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+from nltk.stem import WordNetLemmatizer
+from sklearn.decomposition import TruncatedSVD
+from wordcloud import WordCloud
+
+
+word_lemmatizer = WordNetLemmatizer()
+
+url_list = pd.read_excel('Sam_Url_OK_KO_connexion.xlsx')
+url = url_list.get('OK_Connexion')[10]
+
+import bs4 as bs  
+import urllib.request  
+import re
+
+#creating Bag of Words Model
+raw_html = urllib.request.urlopen(url)  
+raw_html = raw_html.read()
+article_html = bs.BeautifulSoup(raw_html, 'lxml')
+
+article_paragraphs = article_html.find_all('body')
+
+patents = {'patent', 'patents', 'company', 'application','product', 
+                     'products', 'access', 'package', 'brend','companies'}
+patents_words = set(w.rstrip() for w in patents)
+
+article_text = ''
+
+for para in article_paragraphs:  
+    article_text += para.text
+
+corpus = nltk.sent_tokenize(article_text)
+
+def visualize(corpus):
+    words=''
+    for msg in corpus:
+        msg = msg.lower()
+        words += msg + ''
+    
+    wordcloud = WordCloud(width=600, height=400).generate(words)
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
+    
+def visualize_text_patent(corpus):
+    words=''
+    i = 0
+    for msg in corpus:
+        msg = msg.lower()
+        for patent in patents_words:
+            if msg == patent: 
+                words += msg + ''
+    
+    wordcloud = WordCloud(width=600, height=400).generate(words)
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
+
+def make_clean_text(corpus):
+    for i in range(len(corpus )):
+        corpus [i] = corpus [i].lower()
+        corpus [i] = re.sub(r'\W',' ',corpus [i])
+        corpus [i] = re.sub(r'\s+',' ',corpus [i])
+
+wordfreq = {}
+for sentence in corpus:
+    tokens = nltk.word_tokenize(sentence)
+    for token in tokens:
+        if token not in wordfreq.keys():
+            wordfreq[token] = 1
+        else:
+            wordfreq[token] += 1
+
+
+def my_tokenizer(s):
+    s = s.lower()
+    tokens_new = nltk.tokenize.word_tokenize(s)
+    tokens_new = [token for token in tokens_new if len(token) > 2]
+    tokens_new = [word_lemmatizer.lemmatize(token) for token in tokens_new]
+    tokens_new = [token for token in tokens_new if token not in patents_words]
+    tokens_new = [token for token in tokens_new if not any(c.isdigit() for c in token)]
+    return tokens_new
+
+
+word_index_map = {}
+current_index = 0
+all_tokens = []
+all_titles = []
+index_word_map = []
+
+for title in corpus:
+    try :
+        #title = title.encode('ascii', 'ignore') -> transform in bytes 
+        all_titles.append(title)
+        tokens = my_tokenizer(title)
+        all_tokens.append(tokens)
+        for token in tokens:
+            if token not in word_index_map:
+                word_index_map[token] = current_index
+                current_index += 1
+                index_word_map.append(token)
+    except :
+        pass
+
+
+def tokens_to_vector(tokens):
+    x = np.zeros(len(word_index_map)) # last element is for the label
+    for t in tokens:
+        i = word_index_map[t]
+        x[i] = 1
+    return x
+
+N = len(all_tokens)
+D = len(word_index_map)
+X = np.zeros((D,N))
+i = 0
+
+for tokens in all_tokens:
+    X[:,i] = tokens_to_vector(tokens)
+    i +=1
+    
+svd = TruncatedSVD()
+Z = svd.fit_transform(X)
+plt.scatter(Z[:,0], Z[:,1])
+for i in range(D):
+    plt.annotate(s=index_word_map[i], xy=(Z[i,0], Z[i,1]))
+plt.show()
