@@ -18,8 +18,8 @@ from wordcloud import WordCloud
 
 word_lemmatizer = WordNetLemmatizer()
 
-url_list = pd.read_excel('Sam_Url_OK_KO_connexion.xlsx')
-url = url_list.get('OK_Connexion')[10]
+url_list = pd.read_excel('../Sam_Url_OK_KO_connexion.xlsx')
+url = url_list.get('OK_Connexion')[5]
 
 import bs4 as bs  
 import urllib.request  
@@ -43,6 +43,14 @@ for para in article_paragraphs:
 
 corpus = nltk.sent_tokenize(article_text)
 
+'''
+If I find the sentance with text patents or patent I keap the all sentance ZD
+Natural language : word, sentence, document de plus il faut corpus oeuvre etc..
+'''
+
+def clen_sentence(corpus):
+    make_clean_text(corpus)
+
 def visualize(corpus):
     words=''
     for msg in corpus:
@@ -54,19 +62,15 @@ def visualize(corpus):
     plt.axis('off')
     plt.show()
     
-def visualize_text_patent(corpus):
-    words=''
-    i = 0
-    for msg in corpus:
-        msg = msg.lower()
-        for patent in patents_words:
-            if msg == patent: 
-                words += msg + ''
-    
-    wordcloud = WordCloud(width=600, height=400).generate(words)
-    plt.imshow(wordcloud)
-    plt.axis('off')
-    plt.show()
+def check_patent_into_sentence(corpus):
+    list_sentence = []
+    for sentence in corpus:
+        token = my_tokenizer(sentence)
+        print("token :{0}".format(token))
+        if token in patents_words:
+            list_sentence.append(sentence)
+    return list_sentence
+                    
 
 def make_clean_text(corpus):
     for i in range(len(corpus )):
@@ -122,18 +126,20 @@ def tokens_to_vector(tokens):
         x[i] = 1
     return x
 
-N = len(all_tokens)
-D = len(word_index_map)
-X = np.zeros((D,N))
-i = 0
 
-for tokens in all_tokens:
-    X[:,i] = tokens_to_vector(tokens)
-    i +=1
+def display_histo(all_tokens, word_index_map):
+    N = len(all_tokens)
+    D = len(word_index_map)
+    X = np.zeros((D,N))
+    i = 0
     
-svd = TruncatedSVD()
-Z = svd.fit_transform(X)
-plt.scatter(Z[:,0], Z[:,1])
-for i in range(D):
-    plt.annotate(s=index_word_map[i], xy=(Z[i,0], Z[i,1]))
-plt.show()
+    for tokens in all_tokens:
+        X[:,i] = tokens_to_vector(tokens)
+        i +=1
+        
+    svd = TruncatedSVD()
+    Z = svd.fit_transform(X)
+    plt.scatter(Z[:,0], Z[:,1])
+    for i in range(D):
+        plt.annotate(s=index_word_map[i], xy=(Z[i,0], Z[i,1]))
+    plt.show()
