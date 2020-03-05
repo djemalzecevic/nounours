@@ -19,7 +19,7 @@ from wordcloud import WordCloud
 word_lemmatizer = WordNetLemmatizer()
 
 url_list = pd.read_excel('../Sam_Url_OK_KO_connexion.xlsx')
-url = url_list.get('OK_Connexion')[5]
+url = url_list.get('OK_Connexion')[4]
 
 import bs4 as bs  
 import urllib.request  
@@ -92,7 +92,20 @@ def my_tokenizer(s):
     s = s.lower()
     tokens_new = nltk.tokenize.word_tokenize(s)
     tokens_new = [token for token in tokens_new if len(token) > 2]
+    '''
+        Definition of :
+            1. lemmatize -> a lemma is the canonical or base form for a set of word  and is 
+            also known as the head word
+            2. stem -> a stem for a word is a part of the word to which various affixes can be 
+            attached
+            3. pow -> This is mainly used to annotate each word with a POS tag indicating
+            the part of speech associated with it
+    '''
     tokens_new = [word_lemmatizer.lemmatize(token) for token in tokens_new]
+    tokens_new = [word_lemmatizer.stem(token) for token in tokens_new]
+    tokens_new = [word_lemmatizer.pow(token) for token in tokens_new]
+    
+    
     tokens_new = [token for token in tokens_new if token not in patents_words]
     tokens_new = [token for token in tokens_new if not any(c.isdigit() for c in token)]
     return tokens_new
@@ -143,3 +156,9 @@ def display_histo(all_tokens, word_index_map):
     for i in range(D):
         plt.annotate(s=index_word_map[i], xy=(Z[i,0], Z[i,1]))
     plt.show()
+
+
+from nltk.corpus import brown
+
+def new_text_cleaning(corpus):
+        
