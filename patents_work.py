@@ -4,6 +4,25 @@
 Created on Wed Feb 26 16:47:45 2020
 
 @author: djemi
+
+I Need this :
+    
+For sam project I need to use Contextual Recognition and Reolution
+-> undestanding natular language and includes both syntactic and semantic-based reasoning.
+
+Text Summarization
+-> retains the key points of the collection
+
+Text Categorization
+-> is identifying to which category or class a specific document should be placed based on the 
+contents of the document.
+
+Steps :
+    1. text preprocessing
+        a. NLTK -> the natural language toolkit
+        b. gensim
+        c. textblob
+        d. spacy
 """
 
 import nltk
@@ -105,7 +124,7 @@ def my_tokenizer(s):
     tokens_new = [word_lemmatizer.stem(token) for token in tokens_new]
     tokens_new = [word_lemmatizer.pow(token) for token in tokens_new]
     
-    
+            
     tokens_new = [token for token in tokens_new if token not in patents_words]
     tokens_new = [token for token in tokens_new if not any(c.isdigit() for c in token)]
     return tokens_new
@@ -161,4 +180,4 @@ def display_histo(all_tokens, word_index_map):
 from nltk.corpus import brown
 
 def new_text_cleaning(corpus):
-        
+    pass    
