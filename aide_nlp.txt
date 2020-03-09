@@ -1,0 +1,69 @@
+I Need this :
+
+For sam project I need to use Contextual Recognition and Reolution
+-> undestanding natular language and includes both syntactic and semantic-based reasoning.
+
+Text Summarization
+-> retains the key points of the collection
+
+Text Categorization
+-> is identifying to which category or class a specific document should be placed based on the
+contents of the document.
+
+Steps :
+    1. text preprocessing
+        a. NLTK -> the natural language toolkit
+        b. gensim
+        c. textblob
+        d. spacy
+
+Pre-processing techniques:
+    Help cleaning and stadardization of the text, whit help in analytical systems
+    1. Tokenization
+    2. Tagging
+    3. Chunking
+    4. Stemming
+    5. Lemmatization
+
+    I Need this :
+
+    For sam project I need to use Contextual Recognition and Reolution
+    -> undestanding natular language and includes both syntactic and semantic-based reasoning.
+
+    Text Summarization
+    -> retains the key points of the collection
+
+    Text Categorization
+    -> is identifying to which category or class a specific document should be placed based on the
+    contents of the document.
+
+    Steps :
+        1. text preprocessing
+            a. NLTK -> the natural language toolkit
+            b. gensim
+            c. textblob
+            d. spacy
+
+    Pre-processing techniques:
+        Help cleaning and stadardization of the text, whit help in analytical systems
+        1. Tokenization
+        2. Tagging
+        3. Chunking
+        4. Stemming
+        5. Lemmatization
+
+
+        TEXT TOKENIZATION
+
+The most popular tokenization techniques include sentence and word tokenization, which
+are used to break sown a text corpus into sentences, and each sentence into workds.
+Smaller meaningful components called tokens.
+
+sentence Tokenization
+
+Using framework NLTK to help us : Basic techniques include looking for specific
+delimeters between sentencs, such are period (.) or a newline charachter (\n).
+  1. sent_tokenize
+  2. PunktSentenceTokenizer
+  3. RegexpTokenizer
+  4. Pre-trained sentence tokenization models
