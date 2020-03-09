@@ -23,6 +23,14 @@ Steps :
         b. gensim
         c. textblob
         d. spacy
+        
+Pre-processing techniques:
+    Help cleaning and stadardization of the text, whit help in analytical systems
+    1. Tokenization
+    2. Tagging
+    3. Chunking
+    4. Stemming
+    5. Lemmatization
 """
 
 import nltk
