@@ -77,3 +77,5 @@ that can be used to reconstruct the sentence.
   2. TreebankWordTokenizer
   3. RegexpTokenizer
   4. Inherited tokenizers from RegexpTokenizer
+
+  How to use text pattern :

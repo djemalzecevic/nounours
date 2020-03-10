@@ -76,10 +76,23 @@ Natural language : word, sentence, document de plus il faut corpus oeuvre etc..
 '''
 SENTENCE_TOKENS_PATTERN = r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<![A-Z]\.(?<=\./\?/\!)\s)'
 
+TOKEN_PATTERN = r"\w+"
+
 def clen_sentence(corpus):
     make_clean_text(corpus)
-    regex_st = nltk.tokenize.RegexpTokenizer(pattern=SENTENCE_TOKENS_PATTERN,gaps=True)
-
+    '''
+        1. regex_st cleaning sentences
+        2. regex_wt cleaning senteces this is for me cleaning all non text and
+        keep only words.
+    '''
+    #regex_st = nltk.tokenize.RegexpTokenizer(pattern=SENTENCE_TOKENS_PATTERN,gaps=True)
+    treebank_wt = nltk.TreebankWordTokenizer()
+    words_001 = treebank_wt.tokenize(article_text)
+     
+    regex_wt = nltk.RegexpTokenizer(pattern=TOKEN_PATTERN, gaps=False)
+    words_002 = treebank_wt.tokenize(article_text)
+    word_indices = list(regex_wt.span_tokenize(article_text))
+    
 def visualize(corpus):
     words=''
     for msg in corpus:
@@ -95,9 +108,7 @@ def check_patent_into_sentence(corpus):
     list_sentence = []
     for sentence in corpus:
         token = my_tokenizer(sentence)
-        print("token :{0}".format(token))
-        if token in patents_words:
-            list_sentence.append(sentence)
+        list_sentence.append(sentence)
     return list_sentence
                     
 
