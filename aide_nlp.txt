@@ -59,7 +59,7 @@ The most popular tokenization techniques include sentence and word tokenization,
 are used to break sown a text corpus into sentences, and each sentence into workds.
 Smaller meaningful components called tokens.
 
-sentence Tokenization
+Sentence Tokenization
 
 Using framework NLTK to help us : Basic techniques include looking for specific
 delimeters between sentencs, such are period (.) or a newline charachter (\n).
@@ -67,3 +67,13 @@ delimeters between sentencs, such are period (.) or a newline charachter (\n).
   2. PunktSentenceTokenizer
   3. RegexpTokenizer
   4. Pre-trained sentence tokenization models
+
+Word TOKENIZATION
+
+Is the process of splitting or sementaing sentences into their constituent workds.
+A sentence is a collection of words, and with tokenization we essentially split a sentence into a list of workds
+that can be used to reconstruct the sentence.
+  1. word_tokenize
+  2. TreebankWordTokenizer
+  3. RegexpTokenizer
+  4. Inherited tokenizers from RegexpTokenizer

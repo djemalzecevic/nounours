@@ -74,9 +74,11 @@ corpus = nltk.sent_tokenize(article_text)
 If I find the sentance with text patents or patent I keap the all sentance ZD
 Natural language : word, sentence, document de plus il faut corpus oeuvre etc..
 '''
+SENTENCE_TOKENS_PATTERN = r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<![A-Z]\.(?<=\./\?/\!)\s)'
 
 def clen_sentence(corpus):
     make_clean_text(corpus)
+    regex_st = nltk.tokenize.RegexpTokenizer(pattern=SENTENCE_TOKENS_PATTERN,gaps=True)
 
 def visualize(corpus):
     words=''
