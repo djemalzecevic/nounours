@@ -89,4 +89,12 @@ Text Normalization
 
 Is defined as a process that consits of a series of steps that should be followed
 to wrangle, clean, and standardize textual data into a form that could be
-consumed by other NLP and analytics systems and applications as input. 
+consumed by other NLP and analytics systems and applications as input.
+Often tokenization itself also is a part of text normalization, text normalization
+is also colled text cleansing or wrangling (cleaning text, case conversion, correcting
+spellings, removing stopwords and other unnecessary terms. stemming, and lemmatization.)
+.
+
+Cleaning Text
+
+ 
