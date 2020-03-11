@@ -79,3 +79,14 @@ that can be used to reconstruct the sentence.
   4. Inherited tokenizers from RegexpTokenizer
 
   How to use text pattern :
+  Besides the base RegexpTokenizer class, there are several derived classes that perfom
+  different types of word tokenization. The WordPunktTokenizer uses the pattern
+  r'\w+/[^\w\s]+' to tokenize sentences into independente alphabetic and
+  non-alphabetic tokens. The WhitespaceTokenizer tokenizes sentences into words
+  based on whitespaces like tabs, newlines, and spaces.
+
+Text Normalization
+
+Is defined as a process that consits of a series of steps that should be followed
+to wrangle, clean, and standardize textual data into a form that could be
+consumed by other NLP and analytics systems and applications as input. 
