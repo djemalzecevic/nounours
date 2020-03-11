@@ -97,4 +97,19 @@ spellings, removing stopwords and other unnecessary terms. stemming, and lemmati
 
 Cleaning Text
 
- 
+Textual data we want to use or analyze contains a lot of extraneous and unnecessary
+tokens and characters that should be removed before performing any furhter operations like
+tokenization or other normalization techniques.
+
+Tokenizing Text
+
+We tokenize text before or after removing unnecessary characters and symbols
+from data.
+
+Removig Special Characters
+
+In text normalization involves removing unnecessary and special characters.
+Create a pattern of cahracheter you whant to remove them ....
+PATTERTN = r'[?|$|&|*|%|@|(|)|~]'
+
+clean_sentence = re.sub(PATTERN,r",sentence)
