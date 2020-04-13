@@ -78,7 +78,15 @@ SENTENCE_TOKENS_PATTERN = r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<![A-Z]\.(?<=\./\?/\!
 
 TOKEN_PATTERN = r"\w+"
 
-def clen_sentence(corpus):
+'''
+Create a liste static of stopwords with analysing few websites and add words 
+without a lot of significance to my list
+'''
+STOPWORDS_LIST = ['mr','mrs','come','go','get','tell','listen', 'back', 'ask']
+
+stopword_list = nltk.corpus.stopwords.words("english")
+
+def clean_sentence(corpus):
     make_clean_text(corpus)
     '''
         1. regex_st cleaning sentences
@@ -92,6 +100,15 @@ def clen_sentence(corpus):
     regex_wt = nltk.RegexpTokenizer(pattern=TOKEN_PATTERN, gaps=False)
     words_002 = treebank_wt.tokenize(article_text)
     word_indices = list(regex_wt.span_tokenize(article_text))
+    
+def keep_text_characters(texts):
+    filtered_words = []
+    
+    for word in texts:
+        if re.search(SENTENCE_TOKENS_PATTERN, word):
+            filtered_words.append(word)
+    filtered_text = ''.join(filtered_words)
+    return filtered_text
     
 def visualize(corpus):
     words=''
