@@ -12,6 +12,7 @@ print('Hello Sam Sam')
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
+import numpy as np
 
 
 # import libraries for Natural Language Processing and more
@@ -43,13 +44,16 @@ def start_process_nlp(article_paragraphs = '', corpus = '', number = 0):
         for ligne in range(len(url_list)):
             try:
                 url = url_list.get('OK_Connexion')[ligne]
-                if ligne <= 350:
+                
+                if ligne <= 300 and url is not np.nan:
                     print (ligne, url)
+                    
                     raw_html = urllib.request.urlopen(url)  
                     raw_html = raw_html.read()
                     article_html = bs.BeautifulSoup(raw_html, 'lxml')
                     article_paragraphs = article_html.find_all('body')
                     corpus = first_clean_text_html_return_corpus(article_paragraphs)
+                    
                     if len(corpus) == 0:
                         print('No text or problem to find text in the url :',url)
                         add_error(errors,ligne,url,'requete_html_vide_text')
