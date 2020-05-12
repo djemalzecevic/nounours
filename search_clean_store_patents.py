@@ -45,7 +45,7 @@ def start_process_nlp(article_paragraphs = '', corpus = '', number = 0):
             try:
                 url = url_list.get('OK_Connexion')[ligne]
                 
-                if ligne <= 300 and url is not np.nan:
+                if ligne <= 400 and url is not np.nan:
                     print (ligne, url)
                     
                     raw_html = urllib.request.urlopen(url)  
@@ -61,6 +61,8 @@ def start_process_nlp(article_paragraphs = '', corpus = '', number = 0):
                     else:   
                         make_clean_text(corpus)
                         add_to_data(data, corpus, url, ligne)
+                        visualize(corpus)
+
                 else:
                     break
             except urllib.error.URLError as urlErr:
@@ -132,14 +134,20 @@ def add_errors_to_json(errors):
 
 def visualize(corpus):
     words=''
+    
     for msg in corpus:
         msg = msg.lower()
         words += msg + ''
     
-    wordcloud = WordCloud(width=600, height=400).generate(words)
+    wordcloud = WordCloud(width=800, height=600, 
+                          background_color='white', 
+                          colormap='Dark2',
+                          max_font_size=200, 
+                          random_state=42).generate(words)
     plt.imshow(wordcloud)
     plt.axis('off')
     plt.show()
+    
 
 '''
 def time_it(fn, rep=1, *args, ***kwargs):

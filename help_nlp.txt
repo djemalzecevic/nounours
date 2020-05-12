@@ -136,5 +136,69 @@ How to use NLTK lib for stop words
 
 Text Normalization
 
-We will need to normalize our text documents and coorpora as usual before we perform any further analyses or 
+We will need to normalize our text documents and coorpora as usual before we perform any further analyses or
 NLP.
+
+Feature Extraction
+
+To see how to do it........
+Exemple  ---> see how to use this lib...
+
+from sklearn.feature_extraction.text import CountVectorize, TfidfVectorize
+
+def build_feature_matrix(documents, feature_type='frequency', ngram_range=(1,1),min_df=0.0,max_df1.0):
+    feature_tpye = feature_type.lower().strip()
+
+    if feature_type == 'binary':
+      vectorizer = CountVectorize(binary=True, min_df=min_df,max_df=max_df,ngram_range=ngram_range)
+    elif feature_type == 'frequency':
+      vectorizer = CountVectorize(binary=False, min_df=min_df,max_df=max_df,ngram_range=ngram_range)
+    elif feature_tpye == 'tfidf':
+      vectorizer = TfidfVectorize(min_df=min_df,max_df=max_df,ngram_range=ngram_range)
+    else:
+      raise.Exception('Wrong value of feature type, possible value:','binary','frequency','tfidf')
+
+    feature_matrix = vectorizer.fit_transform(documents).astype(float)
+
+    return vectorizer, feature_matrix
+
+This function definition use capabilities for Bag of Words frequency, occurrences, and also TF-IDF-based features.
+
+Text Similarity
+
+The main objective is to analyze and measure how two entities of text are close or far apart from each other.
+1. Lexical Similarity -> most popular
+  a. term similarity measure similarity between individual token or words
+    Analyzing Term Similarity
+      - Character vectorization
+      - Bag of Characters vectorization
+  b. document similarity measuring similarity between entire text documents
+2. Semantic similarity
+
+5 Metrics :
+  1. Hamming distance
+  2. Manhattan distance
+  3. Euclidean distance
+  4. Levenshtein edit distance
+  5. Cosine distance and similarity
+
+Analyzing Document Similarity
+
+from normalization import normalize_corpus
+from utils import build_feature_matrix
+import numpy as np
+
+# load the toy corpus index
+toy_corpus = ['The sky is blue', 'The sky i blue and beautiful', 'Look at the bright blue sky!',
+              'Python is a great Programming language', 'Python and Java are popular Programming language',
+              'Among Programming language, both Python and Java are the most used in Analytics',
+              'The fox is quicker than the lazy dog', 'The dog is smarter than the fox',
+              'The dog, fox and cat are good friends']
+
+# load the docs for which we will be measuring similarities
+query_doc = ['The fox is definitely smarter than the dog',
+             'Java is a static typed programming language unlike Python',
+             'I love to relax under the beautiful blue sky!']
+
+#  normalization and extract features form the toy corpus
+norm_corpus = normalize_corpus(toy_corpus, lemmatize=True)

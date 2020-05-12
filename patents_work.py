@@ -196,6 +196,33 @@ def tokens_to_vector(tokens):
         x[i] = 1
     return x
 
+# Analyzing Term Similarity
+def vectorize_terms(terms):
+    '''
+    Help :
+        The function takes input list of words and returns the corresponding character vecrtors for the words.
+        And we coupute the frequency of each caracter in the word
+    '''
+    terms = [term.lower() for term in terms]
+    terms = [np.array(list(term)) for term in terms]
+    terms = [np.array([ord(char) for char in term]) for trem in terms]
+    return terms
+
+from scipy.stats import itemfreq
+
+def boc_term_verctors(word_list):
+    '''
+        Help:
+            We take in a list of words or terms and then extract the unique characters form all whe words.
+            
+    '''
+    word_list = [word.lower() for word in word_list]
+    unique_chars = np.unique(np.hstack([list(word) for word in word_list]))
+    word_list_term_counts = [{char: count for char, count in itemfreq (list(word))} for word in word_list]
+    boc_vectors = [np.array([int(word_term_counts.get(char,o))
+        for char in unique_chars]) 
+            for word_term_counts in word_list_term_counts]
+    return list(unique_chars),boc_vectors
 
 def display_histo(all_tokens, word_index_map):
     N = len(all_tokens)
